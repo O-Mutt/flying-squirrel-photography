@@ -46,7 +46,7 @@ Where to change the details. The FAQ answers are still sample values.
 | Pricing (currently the $150 introductory rate: 1-hour session, 10 high-res edited photos) | The "Introductory rate" panels on each page, and the `price` values in each page's structured data (the `<script type="application/ld+json">` block near the top) |
 | FAQ answers (deposit, turnaround, rain policy) | FAQ sections on the home page and service pages |
 | Communities served (currently St. Paul, Minneapolis, Roseville, Maplewood, Woodbury, Cottage Grove, Lake Elmo, Afton, Eagan, Edina) | Home page About section and the "Where to…" section of each service page, plus `areaServed` in each page's structured data |
-| Location suggestions (Como Park, Hidden Falls, Mississippi River bluffs, Summit Avenue, downtown St. Paul) | Home page FAQ and the service pages |
+| Location suggestions (Como Park, Hidden Falls, Mississippi River bluffs, Summit Avenue, downtown St. Paul, Lake Elmo Park Reserve, Afton State Park) | Home page FAQ and the service pages |
 
 ### Adding photos
 
