@@ -43,15 +43,41 @@ No code changes needed. Just drop image files in with these names:
 
 Any photo that's missing shows a soft placeholder tile instead. Update the `alt="..."` text on each gallery image to describe the photo.
 
-## Booking form: getting requests by email
+## Booking form: connecting it to Google Calendar
 
-Out of the box, submitting the form opens the visitor's own email app with the request pre-filled and addressed to the contact email. That works, but some visitors won't have an email app set up, so for real use connect a free form service:
+Out of the box, submitting the form opens the visitor's own email app with the request pre-filled and addressed to the contact email. That works, but some visitors won't have an email app set up, so for real use connect it to Google. It's free and runs entirely in your own Google account.
 
-1. Create a free account at [formspree.io](https://formspree.io) and create a new form.
-2. Copy its endpoint URL (looks like `https://formspree.io/f/abcdwxyz`).
-3. Paste it into `FORM_ENDPOINT` at the top of `assets/js/main.js`.
+**What you get:** each request adds a yellow **"Booking request"** hold to your Google Calendar on the client's preferred date (and backup date). The hold shows as *free*, so it won't block other bookings. You also get an email with all the details, plus a heads-up listing anything already on your calendar those days. Hit Reply to answer the client directly. Once you've confirmed or declined, delete the hold or turn it into the real session.
 
-Requests then arrive straight in your inbox and the visitor sees a thank-you message on the page.
+**One-time setup (about 10 minutes):**
+
+1. Signed in to the Google account whose calendar you use, go to [script.google.com](https://script.google.com) and click **New project**. Name it "Booking requests".
+2. Delete the sample code, then paste in everything from [`google-apps-script/Code.gs`](google-apps-script/Code.gs).
+3. Optional: change the settings in `CONFIG` at the top of the code:
+   - `CALENDAR_ID`: leave as `"primary"` for your main calendar, or create a separate calendar such as "Photo bookings" and paste its Calendar ID (found in that calendar's Google Calendar settings).
+   - `NOTIFY_EMAIL`: where request emails go. Leave blank to use the account's own address.
+   - `SEND_CLIENT_CONFIRMATION`: set to `true` to automatically email clients a "got your request" note from your account.
+4. Click **Save**, choose `setup` in the function dropdown, and click **Run**. Google will ask you to allow access to your calendar and email. Approve it. (If you see "Google hasn't verified this app", that's normal for your own script: click **Advanced → Go to Booking requests**.)
+5. Click **Deploy → New deployment**, click the gear icon and choose **Web app**, then set:
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+
+   Click **Deploy** and copy the **Web app URL** (it ends in `/exec`).
+6. Paste that URL into `FORM_ENDPOINT` at the top of `assets/js/main.js`.
+
+Send a test request from the live site to make sure it works. If you change the script later, use **Deploy → Manage deployments → Edit → Version: New version** so the same URL picks up your changes.
+
+**Prefer not to use Google?** `FORM_ENDPOINT` also accepts a [Formspree](https://formspree.io) form URL (email only, no calendar holds).
+
+### Optional: let clients pick an open time on your calendar
+
+Google Calendar can also publish a booking page (Google calls these *appointment schedules*) where clients choose from the times you've marked available, and the session lands on your calendar automatically.
+
+1. In Google Calendar, click **Create → Appointment schedule** and set your session length, available hours, and buffer time.
+2. Open the schedule, click **Share**, and copy the booking page link.
+3. Paste it into `GOOGLE_BOOKING_URL` at the top of `assets/js/main.js`.
+
+A **"Pick an open time"** button then appears beside the booking form. The request form stays available for clients who want to talk things through first.
 
 ## Publishing with GitHub Pages
 
@@ -65,7 +91,8 @@ Requests then arrive straight in your inbox and the visitor sees a thank-you mes
 ```
 index.html              the page
 assets/css/styles.css   styles (colors come from the logo; see :root at the top)
-assets/js/main.js       mobile menu, photo placeholders, booking form
+assets/js/main.js       mobile menu, photo placeholders, booking form (config at the top)
+google-apps-script/     Google Calendar booking handler (paste into script.google.com)
 assets/img/             logo, logo mark, social share image, photos
 favicon.png, apple-touch-icon.png
 ```

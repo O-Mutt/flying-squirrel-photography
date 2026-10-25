@@ -1,13 +1,17 @@
 /*
  * Flying Squirrels Photography - site behavior.
  *
- * BOOKING FORM SETUP
- * Paste your Formspree form URL below (free at https://formspree.io) and booking
- * requests will arrive in your inbox. Until it's set, the form falls back to
- * opening the visitor's email app with their request pre-filled, addressed to
- * the email in the "contact-email" links in index.html.
+ * BOOKING FORM SETUP (see README)
+ * FORM_ENDPOINT: paste your Google Apps Script web app URL (adds requests to your
+ * Google Calendar and emails you) or a Formspree form URL. Until it's set, the
+ * form falls back to opening the visitor's email app with their request
+ * pre-filled, addressed to the email in the "contact-email" links in index.html.
+ *
+ * GOOGLE_BOOKING_URL: optional link to a Google Calendar appointment schedule
+ * booking page. When set, a "pick an open time" button appears next to the form.
  */
-const FORM_ENDPOINT = ""; // e.g. "https://formspree.io/f/abcdwxyz"
+const FORM_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/AKfy.../exec"
+const GOOGLE_BOOKING_URL = ""; // e.g. "https://calendar.app.google/abc123"
 
 (function () {
   "use strict";
@@ -39,6 +43,13 @@ const FORM_ENDPOINT = ""; // e.g. "https://formspree.io/f/abcdwxyz"
   // ---------- Footer year ----------
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  // ---------- Google Calendar booking page (optional) ----------
+  const calBooking = document.getElementById("calendar-booking");
+  if (calBooking && GOOGLE_BOOKING_URL) {
+    calBooking.querySelector("a").href = GOOGLE_BOOKING_URL;
+    calBooking.hidden = false;
+  }
 
   // ---------- Booking form ----------
   const form = document.getElementById("booking-form");
@@ -144,12 +155,16 @@ const FORM_ENDPOINT = ""; // e.g. "https://formspree.io/f/abcdwxyz"
     submitBtn.textContent = "Sending…";
     try {
       data.append("_subject", "New booking request: " + data.get("session_type"));
+      // URL-encoded so both Formspree and Google Apps Script can read the fields
+      // (Apps Script doesn't parse multipart bodies).
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        body: data,
+        body: new URLSearchParams(data),
         headers: { Accept: "application/json" },
       });
-      if (!res.ok) throw new Error("HTTP " + res.status);
+      // Apps Script reports script errors as a 200 HTML page, so require a JSON reply.
+      const reply = await res.json().catch(() => null);
+      if (!res.ok || !reply || reply.ok === false) throw new Error("Request failed");
       showSuccess(name, false);
     } catch (err) {
       submitBtn.disabled = false;
