@@ -23,7 +23,7 @@ python3 -m http.server 8000
 
 ## Before going live: fill in the details
 
-These still have sample values to replace.
+Check these before launch. Everything except the email still has sample values.
 
 | What | Where |
 | --- | --- |
