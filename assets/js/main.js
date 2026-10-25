@@ -6,12 +6,8 @@
  * Google Calendar and emails you) or a Formspree form URL. Until it's set, the
  * form falls back to opening the visitor's email app with their request
  * pre-filled, addressed to the email in the "contact-email" links in index.html.
- *
- * GOOGLE_BOOKING_URL: optional link to a Google Calendar appointment schedule
- * booking page. When set, a "pick an open time" button appears next to the form.
  */
 const FORM_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/AKfy.../exec"
-const GOOGLE_BOOKING_URL = ""; // e.g. "https://calendar.app.google/abc123"
 
 (function () {
   "use strict";
@@ -43,13 +39,6 @@ const GOOGLE_BOOKING_URL = ""; // e.g. "https://calendar.app.google/abc123"
   // ---------- Footer year ----------
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
-
-  // ---------- Google Calendar booking page (optional) ----------
-  const calBooking = document.getElementById("calendar-booking");
-  if (calBooking && GOOGLE_BOOKING_URL) {
-    calBooking.querySelector("a").href = GOOGLE_BOOKING_URL;
-    calBooking.hidden = false;
-  }
 
   // ---------- Booking form ----------
   const form = document.getElementById("booking-form");
@@ -109,7 +98,7 @@ const GOOGLE_BOOKING_URL = ""; // e.g. "https://calendar.app.google/abc123"
     form.querySelector("h3").textContent = "Thank you, " + first + "!";
     form.querySelector("p").textContent = viaEmailApp
       ? "Your email app should have opened with your request filled in. Just hit send and I'll be in touch within two business days."
-      : "Your booking request is on its way. I'll be in touch within two business days to confirm details.";
+      : "Your request is on its way. I'll be in touch within two business days.";
     form.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
@@ -168,7 +157,7 @@ const GOOGLE_BOOKING_URL = ""; // e.g. "https://calendar.app.google/abc123"
       showSuccess(name, false);
     } catch (err) {
       submitBtn.disabled = false;
-      submitBtn.textContent = "Send booking request";
+      submitBtn.textContent = "Send request";
       setStatus("Sorry, something went wrong sending your request. Please try again, or email " + contactEmail + " directly.", true);
     }
   });

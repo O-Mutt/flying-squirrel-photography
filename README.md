@@ -11,7 +11,7 @@ It's a single static page (plain HTML, CSS and JavaScript, no build step), so it
 - **Sessions & pricing**: Family, Newborn & Maternity, Kids & Milestones, Couples & Engagement, Seniors & Graduates, Mini Sessions
 - **Gallery** grid
 - **How it works**: request, plan, shoot, gallery
-- **Booking request form** with validation and a spam trap
+- **Book online** button linking to Kerry's Booksy page, plus a **request form** (with validation and a spam trap) for questions and custom sessions
 - **FAQ** and footer with contact and social links
 
 ## Preview locally
@@ -23,12 +23,13 @@ python3 -m http.server 8000
 
 ## Before going live: fill in the details
 
-Where to change the details. Social links and FAQ answers are still sample values.
+Where to change the details. The FAQ answers are still sample values.
 
 | What | Where |
 | --- | --- |
 | Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
-| Instagram / Facebook links | `index.html`: booking section "Follow along" |
+| Booksy booking link (currently `https://lhkw.app.link/vhiOqlvmt7b`) | `index.html`: the "Book online with Booksy" and "Book at the intro rate" buttons |
+| Instagram (currently `@flyingsquirrelsphotoco`) | `index.html`: booking section "Follow along" and footer |
 | Pricing (currently the $150 introductory rate: 1-hour session, 10 high-res edited photos) | `index.html`: the "Introductory rate" panel in the Sessions section |
 | FAQ answers (deposit, turnaround, rain policy) | `index.html`: FAQ section |
 
@@ -41,7 +42,7 @@ No code changes needed. Just drop image files in with these names:
 
 Any photo that's missing shows a soft placeholder tile instead. Update the `alt="..."` text on each gallery image to describe the photo.
 
-## Booking form: connecting it to Google Calendar
+## Request form: connecting it to Google Calendar
 
 Out of the box, submitting the form opens the visitor's own email app with the request pre-filled and addressed to the contact email. That works, but some visitors won't have an email app set up, so for real use connect it to Google. It's free and runs entirely in your own Google account.
 
@@ -66,16 +67,6 @@ Out of the box, submitting the form opens the visitor's own email app with the r
 Send a test request from the live site to make sure it works. If you change the script later, use **Deploy → Manage deployments → Edit → Version: New version** so the same URL picks up your changes.
 
 **Prefer not to use Google?** `FORM_ENDPOINT` also accepts a [Formspree](https://formspree.io) form URL (email only, no calendar holds).
-
-### Optional: let clients pick an open time on your calendar
-
-Google Calendar can also publish a booking page (Google calls these *appointment schedules*) where clients choose from the times you've marked available, and the session lands on your calendar automatically.
-
-1. In Google Calendar, click **Create → Appointment schedule** and set your session length, available hours, and buffer time.
-2. Open the schedule, click **Share**, and copy the booking page link.
-3. Paste it into `GOOGLE_BOOKING_URL` at the top of `assets/js/main.js`.
-
-A **"Pick an open time"** button then appears beside the booking form. The request form stays available for clients who want to talk things through first.
 
 ## Publishing with GitHub Pages
 
