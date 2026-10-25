@@ -309,6 +309,13 @@ p { margin: 0 0 1em; }
   .gallery { grid-auto-rows: 140px; }
 }
 
+/* ---------- Instagram ---------- */
+
+.ig-feed > :not(script) { margin-bottom: 2rem; } /* whitespace and comments make :empty unreliable */
+.ig-follow { text-align: center; margin: 0; }
+.ig-follow .btn { display: inline-flex; align-items: center; gap: .6em; }
+.ig-follow svg { margin-top: -.15em; }
+
 /* ---------- Process ---------- */
 
 .steps {

@@ -12,6 +12,7 @@ It's a single static page (plain HTML, CSS and JavaScript, no build step), so it
 - **Gallery** grid
 - **How it works**: request, plan, shoot, gallery
 - **Book online** button linking to Kerry's Booksy page, plus a **request form** (with validation and a spam trap) for questions and custom sessions
+- **Latest on Instagram** section with a follow button, ready for a live feed widget
 - **FAQ** and footer with contact and social links
 
 ## Preview locally
@@ -67,6 +68,15 @@ Out of the box, submitting the form opens the visitor's own email app with the r
 Send a test request from the live site to make sure it works. If you change the script later, use **Deploy → Manage deployments → Edit → Version: New version** so the same URL picks up your changes.
 
 **Prefer not to use Google?** `FORM_ENDPOINT` also accepts a [Formspree](https://formspree.io) form URL (email only, no calendar holds).
+
+## Instagram feed
+
+The "Latest on Instagram" section shows a **Follow @flyingsquirrelsphotoco** button. To also show her latest posts and reels, which update automatically, connect a feed widget service:
+
+1. Make sure the Instagram account is a **Professional** account (Business or Creator). It's free to switch in Instagram under *Settings → Account type and tools*. Feed tools can't read personal accounts.
+2. Sign up for a feed widget service such as [Behold](https://behold.so), [LightWidget](https://lightwidget.com) or [SnapWidget](https://snapwidget.com), and connect the Instagram account when it asks. Kerry logs in to Instagram herself, so nobody else needs her password.
+3. Style the feed (a grid of 6 to 8 recent posts suits this section), then copy the **embed code** it gives you.
+4. Paste the embed code inside `<div class="ig-feed">` in `index.html`, replacing the comment there.
 
 ## Publishing with GitHub Pages
 
