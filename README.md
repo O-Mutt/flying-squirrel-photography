@@ -23,13 +23,13 @@ python3 -m http.server 8000
 
 ## Before going live: fill in the details
 
-Check these before launch. Everything except the email still has sample values.
+Where to change the details. Social links and FAQ answers are still sample values.
 
 | What | Where |
 | --- | --- |
 | Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
 | Instagram / Facebook links | `index.html`: booking section "Follow along" |
-| Session prices, lengths and image counts | `index.html`: the Sessions cards (current prices are examples only) |
+| Pricing (currently the $150 introductory rate: 1-hour session, 10 high-res edited photos) | `index.html`: the "Introductory rate" panel in the Sessions section |
 | FAQ answers (deposit, turnaround, rain policy) | `index.html`: FAQ section |
 
 ### Adding photos
