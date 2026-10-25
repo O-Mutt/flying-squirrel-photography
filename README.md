@@ -23,11 +23,10 @@ python3 -m http.server 8000
 
 ## Before going live: fill in the details
 
-Everything in `[square brackets]` and the sample values below are placeholders.
+These still have sample values to replace.
 
 | What | Where |
 | --- | --- |
-| Town / service area | `index.html`: "Based in [Your Town], serving [Your Region]" |
 | Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
 | Instagram / Facebook links | `index.html`: booking section "Follow along" |
 | Session prices, lengths and image counts | `index.html`: the Sessions cards (current prices are examples only) |
