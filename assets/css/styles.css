@@ -343,6 +343,7 @@ p { margin: 0 0 1em; }
   border-left: 3px solid var(--leaf);
   background: var(--cream-deep);
   border-radius: 0 var(--radius) var(--radius) 0;
+  overflow-wrap: anywhere; /* long email address on narrow phones */
 }
 
 @media (max-width: 860px) {

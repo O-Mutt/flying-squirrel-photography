@@ -29,7 +29,7 @@ Everything in `[square brackets]` and the sample values below are placeholders.
 | --- | --- |
 | Photographer's name | `index.html`: "Hi, I'm [Your Name]." |
 | Town / service area | `index.html`: "Based in [Your Town], serving [Your Region]" |
-| Contact email | `index.html`: replace both `you@example.com` (booking section and footer) |
+| Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
 | Instagram / Facebook links | `index.html`: booking section "Follow along" |
 | Session prices, lengths and image counts | `index.html`: the Sessions cards (current prices are examples only) |
 | FAQ answers (deposit, turnaround, rain policy) | `index.html`: FAQ section |
