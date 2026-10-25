@@ -36,6 +36,87 @@ const FORM_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/AKfy.../ex
     else img.addEventListener("error", markEmpty);
   });
 
+  // ---------- Hero: swap the big logo for assets/img/hero.jpg once that photo exists ----------
+  const hero = document.querySelector(".hero");
+  const heroPhoto = document.querySelector(".hero-photo");
+  if (hero && heroPhoto) {
+    const useHeroPhoto = () => hero.classList.add("has-photo");
+    if (heroPhoto.complete && heroPhoto.naturalWidth > 0) useHeroPhoto();
+    else heroPhoto.addEventListener("load", useHeroPhoto);
+  }
+
+  // ---------- Lightbox: click a gallery photo to view it larger ----------
+  const photoGroups = document.querySelectorAll(".gallery, .photo-strip");
+  if (photoGroups.length && window.HTMLDialogElement) {
+    const box = document.createElement("dialog");
+    box.className = "lightbox";
+    box.setAttribute("aria-label", "Photo viewer");
+    box.innerHTML =
+      '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button type="button" class="lb-close" aria-label="Close">&times;</button>' +
+      '<button type="button" class="lb-prev" aria-label="Previous photo">&#8249;</button>' +
+      '<button type="button" class="lb-next" aria-label="Next photo">&#8250;</button>';
+    document.body.appendChild(box);
+    const boxImg = box.querySelector("img");
+    const boxCaption = box.querySelector("figcaption");
+    let items = [];
+    let index = 0;
+
+    const show = (i) => {
+      index = (i + items.length) % items.length;
+      const img = items[index];
+      boxImg.src = img.dataset.full || img.currentSrc || img.src;
+      boxImg.alt = img.alt;
+      boxCaption.textContent = img.alt;
+    };
+    const open = (group, img) => {
+      items = Array.from(group.querySelectorAll(".photo-slot.is-zoomable img"));
+      box.classList.toggle("is-single", items.length < 2);
+      show(items.indexOf(img));
+      box.showModal();
+    };
+
+    photoGroups.forEach((group) => {
+      group.querySelectorAll(".photo-slot img").forEach((img) => {
+        const slot = img.closest(".photo-slot");
+        const enable = () => {
+          slot.classList.add("is-zoomable");
+          slot.tabIndex = 0;
+          slot.setAttribute("role", "button");
+          slot.setAttribute("aria-label", "View larger: " + img.alt);
+        };
+        if (img.complete && img.naturalWidth > 0) enable();
+        else img.addEventListener("load", enable);
+
+        slot.addEventListener("click", () => { if (slot.classList.contains("is-zoomable")) open(group, img); });
+        slot.addEventListener("keydown", (e) => {
+          if ((e.key === "Enter" || e.key === " ") && slot.classList.contains("is-zoomable")) {
+            e.preventDefault();
+            open(group, img);
+          }
+        });
+      });
+    });
+
+    box.querySelector(".lb-close").addEventListener("click", () => box.close());
+    box.querySelector(".lb-prev").addEventListener("click", () => show(index - 1));
+    box.querySelector(".lb-next").addEventListener("click", () => show(index + 1));
+    // The dialog fills the screen, so a click that lands on it directly is outside the photo.
+    box.addEventListener("click", (e) => { if (e.target === box || e.target === box.querySelector("figure")) box.close(); });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(index - 1);
+      if (e.key === "ArrowRight") show(index + 1);
+    });
+    let touchX = null;
+    box.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener("touchend", (e) => {
+      if (touchX === null || items.length < 2) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      touchX = null;
+    });
+  }
+
   // ---------- Footer year ----------
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();

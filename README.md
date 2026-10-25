@@ -2,18 +2,30 @@
 
 Marketing and booking-request website for Flying Squirrels Photography: *capturing the joy of everyday life*.
 
-It's a single static page (plain HTML, CSS and JavaScript, no build step), so it can be hosted for free on GitHub Pages, Netlify, Cloudflare Pages, or any web host.
+It's a small static site (plain HTML, CSS and JavaScript, no build step), hosted free on GitHub Pages at [flyingsquirrels.photography](https://flyingsquirrels.photography).
 
 ## What's on the site
 
-- **Hero** with the logo and "Request a session" call to action
-- **About** the photographer, with a portrait
-- **Sessions & pricing**: Family, Newborn & Maternity, Kids & Milestones, Couples & Engagement, Seniors & Graduates, Mini Sessions
-- **Gallery** grid
-- **How it works**: request, plan, shoot, gallery
-- **Book online** button linking to Kerry's Booksy page, plus a **request form** (with validation and a spam trap) for questions and custom sessions
-- **Latest on Instagram** section with a follow button, ready for a live feed widget
-- **FAQ** and footer with contact and social links
+**Home page (`index.html`)**
+
+- **Hero** with the logo, or a photo once `assets/img/hero.jpg` exists
+- **About** Kerry, with a portrait
+- **Sessions**: the $150 introductory rate, plus Family Portraits, Fall Family Photos, Graduation & Senior Pictures, Newborn & Maternity, Kids & Milestones, Couples & Engagement
+- **Gallery** grid; click a photo to view it larger
+- **Latest on Instagram** with a follow button, ready for a live feed widget
+- **How it works**, **booking** (Booksy button plus a request form for questions), **FAQ**
+
+**Service pages**, each written to rank for its own searches:
+
+| Page | Aimed at searches like |
+| --- | --- |
+| `/family-portraits/` | family portraits St. Paul, family photographer Twin Cities |
+| `/fall-family-photos/` | fall family photos Minnesota, fall photo shoot St. Paul |
+| `/graduation-pictures/` | graduation pictures St. Paul, senior pictures Twin Cities |
+
+Plus `404.html` (shown for broken links), `sitemap.xml` and `robots.txt` for search engines, and `_config.yml`, which keeps the README and Google script off the public site.
+
+The header and footer are repeated in each page, so a change to the menu, email, Booksy link or Instagram link needs making in all five HTML files (`index.html`, `404.html` and the three `*/index.html` pages).
 
 ## Preview locally
 
@@ -28,20 +40,34 @@ Where to change the details. The FAQ answers are still sample values.
 
 | What | Where |
 | --- | --- |
-| Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
-| Booksy booking link (currently `https://lhkw.app.link/vhiOqlvmt7b`) | `index.html`: the "Book online with Booksy" and "Book at the intro rate" buttons |
-| Instagram (currently `@flyingsquirrelsphotoco`) | `index.html`: booking section "Follow along" and footer |
-| Pricing (currently the $150 introductory rate: 1-hour session, 10 high-res edited photos) | `index.html`: the "Introductory rate" panel in the Sessions section |
-| FAQ answers (deposit, turnaround, rain policy) | `index.html`: FAQ section |
+| Contact email (currently `kerry@flyingsquirrels.photography`) | The `contact-email` links (home page booking section, and every page footer); the form uses the same address |
+| Booksy booking link (currently `https://lhkw.app.link/vhiOqlvmt7b`) | Every "Book online with Booksy" and intro-rate button, on the home page and the three service pages |
+| Instagram (currently `@flyingsquirrelsphotoco`) | Home page Instagram section and booking section, every page footer, and the `sameAs` line in the home page's structured data |
+| Pricing (currently the $150 introductory rate: 1-hour session, 10 high-res edited photos) | The "Introductory rate" panels on each page, and the `price` values in each page's structured data (the `<script type="application/ld+json">` block near the top) |
+| FAQ answers (deposit, turnaround, rain policy) | FAQ sections on the home page and service pages |
+| Suburbs served (currently Roseville, Maplewood, Woodbury, Eagan, Edina) | `index.html`: About section |
+| Location suggestions (Como Park, Hidden Falls, Mississippi River bluffs, Summit Avenue, downtown St. Paul) | Home page FAQ and the service pages |
 
 ### Adding photos
 
-No code changes needed. Just drop image files in with these names:
+No code changes needed. Just drop image files in with these names (JPEG, about 1600px on the long edge):
 
-- `assets/img/about.jpg`: portrait for the About section (portrait orientation, about 1000×1250px)
-- `assets/img/gallery/01.jpg` through `09.jpg`: gallery photos (about 1600px on the long edge; 01 and 05 are tall tiles, 04 is a wide tile)
+- `assets/img/hero.jpg`: the big photo at the top of the home page (portrait orientation). It replaces the large logo automatically.
+- `assets/img/about.jpg`: Kerry's portrait for the About section (portrait orientation)
+- `assets/img/gallery/01.jpg` through `09.jpg`: home page gallery (01 and 05 are tall tiles, 04 is a wide tile)
+- `assets/img/family-portraits/01.jpg` to `03.jpg`, `assets/img/fall-family-photos/01.jpg` to `03.jpg`, `assets/img/graduation-pictures/01.jpg` to `03.jpg`: photo strips on the service pages
 
-Any photo that's missing shows a soft placeholder tile instead. Update the `alt="..."` text on each gallery image to describe the photo.
+Any photo that's missing shows a soft placeholder tile instead. **Update each photo's `alt="..."` text** to describe it, mentioning the place where it fits naturally (for example `alt="Family of four laughing in fall leaves at Como Park, St. Paul"`). Search engines read alt text, so it helps people find the site through Google Images.
+
+## Getting found on Google
+
+The site already has the technical side covered: keyword-focused page titles and descriptions, one service page per main search, structured data describing the business and its services, a sitemap, and link-preview tags. What moves the needle from here happens off the site:
+
+1. **Google Business Profile** (free, [business.google.com](https://business.google.com)): the single biggest factor for "photographer near me" and Google Maps results. Set it up as a service-area business covering St. Paul and the Twin Cities (no street address shown), add the website, photos and the Booksy link, and ask happy clients for Google reviews.
+2. **Google Search Console** (free, [search.google.com/search-console](https://search.google.com/search-console)): add `flyingsquirrels.photography`, verify it, and submit `https://flyingsquirrels.photography/sitemap.xml`. It shows which searches find the site.
+3. **Real photos with descriptive alt text**, as above.
+4. **Links from elsewhere**: put the website link in the Instagram bio, Booksy profile and any local directories or school/community groups.
+5. **Keep it fresh**: update the photos each season, especially the fall page before September.
 
 ## Request form: connecting it to Google Calendar
 
@@ -80,18 +106,22 @@ The "Latest on Instagram" section shows a **Follow @flyingsquirrelsphotoco** but
 
 ## Publishing with GitHub Pages
 
-1. Merge this branch into `main`.
-2. In the repo on GitHub, go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`, and save.
-4. After a minute the site is live at `https://<github-username>.github.io/flying-squirrel-photography/`. A custom domain can be added on the same settings page.
+The site publishes from the `main` branch (**Settings → Pages**: Deploy from a branch, `main`, `/ (root)`), on the custom domain in the `CNAME` file. Make sure **Enforce HTTPS** is ticked on that settings page.
 
 ## Files
 
 ```
-index.html              the page
-assets/css/styles.css   styles (colors come from the logo; see :root at the top)
-assets/js/main.js       mobile menu, photo placeholders, booking form (config at the top)
-google-apps-script/     Google Calendar booking handler (paste into script.google.com)
-assets/img/             logo, logo mark, social share image, photos
+index.html                     home page
+family-portraits/index.html    service pages
+fall-family-photos/index.html
+graduation-pictures/index.html
+404.html                       "page not found" page
+sitemap.xml, robots.txt        for search engines
+assets/css/styles.css          styles (colors come from the logo; see :root at the top)
+assets/js/main.js              menu, photo placeholders, gallery viewer, request form (config at the top)
+assets/img/                    logo, logo mark, social share image, photos
+google-apps-script/            Google Calendar handler for the request form (paste into script.google.com)
+_config.yml                    keeps README and google-apps-script off the public site
+CNAME                          custom domain for GitHub Pages
 favicon.png, apple-touch-icon.png
 ```

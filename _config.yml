@@ -1,0 +1,5 @@
+# GitHub Pages builds this repo with Jekyll. The site is plain HTML, so this
+# only keeps repo-only files off the public site.
+exclude:
+  - README.md
+  - google-apps-script
