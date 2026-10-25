@@ -27,7 +27,6 @@ Everything in `[square brackets]` and the sample values below are placeholders.
 
 | What | Where |
 | --- | --- |
-| Photographer's name | `index.html`: "Hi, I'm [Your Name]." |
 | Town / service area | `index.html`: "Based in [Your Town], serving [Your Region]" |
 | Contact email (currently `kerry@flyingsquirrels.photography`) | `index.html`: the two `contact-email` links (booking section and footer); the form uses the same address |
 | Instagram / Facebook links | `index.html`: booking section "Follow along" |
